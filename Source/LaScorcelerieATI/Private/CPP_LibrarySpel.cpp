@@ -2,21 +2,26 @@
 
 #include "CPP_LibrarySpel.h"
 
-bool UCPP_LibrarySpel::GetRowFromDataTable(UDataTable* DataTable, FName RowName, FTableRowBase& OutRow)
+void ULibrarySpel::CastAbility(
+    FName AbilityName,
+    FVector StartLocation,
+    FVector EndLocation,
+    float TimeCharging,
+    UObject* Caster
+)
 {
-	if (!DataTable)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("DataTable is null"));
-		return false;
-	}
+    // Vérification de validité du Caster
+    if (!Caster)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("ExecuteAbility: Caster is null!"));
+        return;
+    }
 
-	FTableRowBase* FoundRow = DataTable->FindRow<FTableRowBase>(RowName, TEXT(""));
-	if (FoundRow)
-	{
-		OutRow = *FoundRow;
-		return true;
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Row not found in DataTable"));
-	return false;
+    // Log des paramètres reçus pour vérification
+    UE_LOG(LogTemp, Log, TEXT("Ability: %s, Start: %s, End: %s, TimeCharging: %f"),
+        *AbilityName.ToString(),
+        *StartLocation.ToString(),
+        *EndLocation.ToString(),
+        TimeCharging
+    );
 }

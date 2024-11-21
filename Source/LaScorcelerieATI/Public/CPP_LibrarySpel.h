@@ -11,12 +11,18 @@
  *
  */
 UCLASS()
-class LASCORCELERIEATI_API UCPP_LibrarySpel : public UBlueprintFunctionLibrary
+class LASCORCELERIEATI_API ULibrarySpel : public UBlueprintFunctionLibrary
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "DataTable")
-	static bool GetRowFromDataTable(UDataTable* DataTable, FName RowName, FTableRowBase& OutRow);
+    // Fonction accessible dans les Blueprints
+    UFUNCTION(BlueprintCallable, Category = "Abilities")
+    static void CastAbility(
+        FName AbilityName,
+        FVector StartLocation,
+        FVector EndLocation,
+        float TimeCharging,
+        UObject* Caster
+    );
 };
-
