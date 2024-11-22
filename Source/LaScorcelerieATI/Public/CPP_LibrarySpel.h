@@ -1,14 +1,14 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// CPP_LibrarySpel.h
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Engine/DataTable.h"
+#include "SpelDefinitions.h"
 #include "CPP_LibrarySpel.generated.h"
 
 /**
- *
+ * Classe qui contient des fonctions utilitaires pour les capacités, accessible dans les Blueprints
  */
 UCLASS()
 class LASCORCELERIEATI_API ULibrarySpel : public UBlueprintFunctionLibrary
@@ -17,12 +17,13 @@ class LASCORCELERIEATI_API ULibrarySpel : public UBlueprintFunctionLibrary
 
 public:
     // Fonction accessible dans les Blueprints
-    UFUNCTION(BlueprintCallable, Category = "Abilities")
+    UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "Abilities")
     static void CastAbility(
-        FName AbilityName,
-        FVector StartLocation,
-        FVector EndLocation,
+        const FAbilityData AbilityData,
+        const FVector StartLocation,
+        const FVector EndLocation,
         float TimeCharging,
         UObject* Caster
     );
+
 };
