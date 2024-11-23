@@ -1,22 +1,23 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// CPP_LibrarySpel.cpp
 
 #include "CPP_LibrarySpel.h"
+#include "SpelDefinitions.h"
 
-bool UCPP_LibrarySpel::GetRowFromDataTable(UDataTable* DataTable, FName RowName, FTableRowBase& OutRow)
+void ULibrarySpel::CastAbility(
+    FAbilityData AbilityData, 
+    FVector StartLocation,
+    FVector EndLocation,
+    float TimeCharging,
+    UObject* Caster
+)
 {
-	if (!DataTable)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("DataTable is null"));
-		return false;
-	}
+    // Vérifier si le Caster implémente l'interface IBL_Ability
+    if (Caster && Caster->GetClass()->ImplementsInterface(UBI_Ability::StaticClass())) {
+        // Appeler les différentes fonctions de l'interface pour les effets
+        IBI_Ability::Execute_Damage(Caster, AbilityData);
+        IBI_Ability::Execute_Dot(Caster, AbilityData);
+        IBI_Ability::Execute_Stun(Caster, AbilityData);
+        IBI_Ability::Execute_Knockback(Caster, AbilityData);
+    }
 
-	FTableRowBase* FoundRow = DataTable->FindRow<FTableRowBase>(RowName, TEXT(""));
-	if (FoundRow)
-	{
-		OutRow = *FoundRow;
-		return true;
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Row not found in DataTable"));
-	return false;
 }
